@@ -6,6 +6,7 @@ plugins {
 android {
     namespace = "com.example.cheongyakhae"
     compileSdk = 34
+    viewBinding.isEnabled = true
 
     defaultConfig {
         applicationId = "com.example.cheongyakhae"

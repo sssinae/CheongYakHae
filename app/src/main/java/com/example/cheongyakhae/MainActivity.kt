@@ -1,11 +1,9 @@
 package com.example.cheongyakhae
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
+import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-
+import com.example.cheongyakhae.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -13,8 +11,16 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // 뷰바인딩 설정
+        // 뷰 바인딩 설정
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // 툴바 설정
+        setSupportActionBar(binding.toolbar)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.toolbar_menu, menu)
+        return true
     }
 }
