@@ -25,6 +25,9 @@ class MainActivity : AppCompatActivity() {
         // Toolbar 설정
         setSupportActionBar(binding.toolbar)
 
+        // 햄버거 아이콘을 흰색으로 설정
+        binding.toolbar.navigationIcon?.setTint(resources.getColor(R.color.white))
+
         // 기본 액션바 타이틀 숨기기
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
