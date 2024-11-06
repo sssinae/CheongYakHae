@@ -10,7 +10,8 @@
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:contentDescription="청약 정보 탭 선택"/>
 
     <!-- ScrollView for scrollable content sections -->
     <ScrollView
