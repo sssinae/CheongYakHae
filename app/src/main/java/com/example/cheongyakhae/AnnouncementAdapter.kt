@@ -16,6 +16,7 @@ class AnnouncementAdapter(private val announcements: List<Announcement>) :
         val houseDetailType: TextView = itemView.findViewById(R.id.house_detail_type)
         val date: TextView = itemView.findViewById(R.id.announcement_date)
         val supplyCount: TextView = itemView.findViewById(R.id.supply_household_count)
+        val contactNumber: TextView = itemView.findViewById(R.id.contact_number)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnnouncementViewHolder {
@@ -30,7 +31,8 @@ class AnnouncementAdapter(private val announcements: List<Announcement>) :
         holder.houseType.text = announcement.house_type
         holder.houseDetailType.text = announcement.house_detail_type
         holder.date.text = "Date: ${announcement.announcement_date}"
-        holder.supplyCount.text = "Supply: ${announcement.supply_household_count}"
+        holder.supplyCount.text = "Supply: ${announcement.supply_household_count ?: 0}"
+        holder.contactNumber.text = "Contact: ${announcement.contact_number ?: "N/A"}"
     }
 
     override fun getItemCount(): Int = announcements.size

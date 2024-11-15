@@ -4,9 +4,18 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <LinearLayout
+        android:id="@+id/pageLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:padding="8dp" />
+
+    <!-- RecyclerView가 아래로 올 수 있도록 배치 -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/announceRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content" />
 
 </LinearLayout>
