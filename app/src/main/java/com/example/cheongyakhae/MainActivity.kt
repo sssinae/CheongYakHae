@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import com.example.cheongyakhae.databinding.ActivityMainBinding
 import com.google.android.material.navigation.NavigationView
 import androidx.appcompat.app.ActionBarDrawerToggle
+import com.google.firebase.FirebaseApp
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -17,7 +18,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        FirebaseApp.initializeApp(this)
         // View Binding 설정
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)

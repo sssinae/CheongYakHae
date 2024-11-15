@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "465120372663",
+    "project_id": "cheongyakhae",
+    "storage_bucket": "cheongyakhae.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:465120372663:android:b1bb920e881652ddd86a32",
+        "android_client_info": {
+          "package_name": "com.example.cheongyakhae"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOuS9QmGK1qfd8o3YYtwlZs-gkogUVG7Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
