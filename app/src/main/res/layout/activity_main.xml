@@ -19,8 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="#31347E"
-            app:titleTextColor="@color/white"
-            android:theme="?attr/actionBarTheme">
+            android:theme="@style/ToolbarTheme">
 
             <!-- 중앙 정렬을 위한 타이틀 텍스트뷰 -->
             <TextView
