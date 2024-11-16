@@ -1,8 +1,10 @@
 package com.example.cheongyakhae
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -37,6 +39,25 @@ class MainActivity : AppCompatActivity() {
         binding.drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
+        // 네비게이션 헤더에 클릭 이벤트 연결
+        val headerView = binding.navigationView.getHeaderView(0) // 네비게이션 헤더 가져오기
+        val loginTextView = headerView.findViewById<TextView>(R.id.login)
+        val signupTextView = headerView.findViewById<TextView>(R.id.signup)
+
+        // 로그인 클릭 리스너
+        loginTextView.setOnClickListener {
+            replaceFragment(LoginFragment())
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
+        }
+
+        // 회원가입 클릭 리스너
+        signupTextView.setOnClickListener {
+            replaceFragment(SignupFragment())
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
+        }
+
+
+
         // 드로어 메뉴 아이템 클릭 리스너 설정
         binding.navigationView.setNavigationItemSelectedListener { menuItem ->
             // 메뉴 클릭 시 해당 Fragment로 전환
@@ -58,6 +79,12 @@ class MainActivity : AppCompatActivity() {
             binding.drawerLayout.closeDrawer(GravityCompat.START)
             true
         }
+    }
+    private fun replaceFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .addToBackStack(null)
+            .commit()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

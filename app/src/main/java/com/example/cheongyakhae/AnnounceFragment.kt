@@ -36,6 +36,7 @@ class AnnounceFragment : Fragment() {
 
     private fun fetchAnnouncements() {
         db.collection("announcements")
+            .orderBy("announcement_date", com.google.firebase.firestore.Query.Direction.DESCENDING)  // 최신순으로 정렬
             .get()
             .addOnSuccessListener { documents ->
                 announcements.clear()
