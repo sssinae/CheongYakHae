@@ -1,4 +1,4 @@
-package com.example.cheongyakhae
+package com.example.cheongyakhae.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.cheongyakhae.R
+import com.example.cheongyakhae.adpater.PostAdapter
 import com.example.cheongyakhae.databinding.FragmentCommunityBinding
 import com.example.cheongyakhae.model.Post
 import com.google.firebase.firestore.FirebaseFirestore
@@ -30,7 +32,7 @@ class CommunityFragment : Fragment() {
         // Floating 버튼 클릭 -> WriteFragment로 이동
         binding.fab.setOnClickListener {
             parentFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, WriteFragment())
+                .replace(R.id.nav_host_fragment, WriteFragment())
                 .addToBackStack(null)
                 .commit()
         }
