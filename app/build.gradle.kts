@@ -1,3 +1,5 @@
+
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -42,19 +44,22 @@ android {
 }
 
 dependencies {
-    //implementation 'com.google.firebase:firebase-auth:21.1.0'
-    implementation(libs.androidx.core.ktx)
+    implementation(libs.firebase.auth)       // Firebase Auth
+    implementation(libs.firebase.firestore)  // Firebase Firestore    implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.firebase.firestore.ktx)
     implementation(libs.firebase.auth.ktx)
+    implementation(libs.androidx.navigation.runtime.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
 }
+
 
 apply(plugin = "com.google.gms.google-services")
 

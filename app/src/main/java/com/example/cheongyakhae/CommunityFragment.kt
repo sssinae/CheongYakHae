@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cheongyakhae.databinding.FragmentCommunityBinding
-import com.example.cheongyakhae.model.Post
 import com.google.firebase.firestore.FirebaseFirestore
 
 class CommunityFragment : Fragment() {
@@ -30,7 +29,7 @@ class CommunityFragment : Fragment() {
         // Floating 버튼 클릭 -> WriteFragment로 이동
         binding.fab.setOnClickListener {
             parentFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, WriteFragment())
+                .replace(R.id.nav_host_fragment, WriteFragment())
                 .addToBackStack(null)
                 .commit()
         }

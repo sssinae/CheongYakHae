@@ -1,4 +1,4 @@
-package com.example.cheongyakhae.model
+package com.example.cheongyakhae
 
 data class Announcement(
     val business_name: String? = "Unknown",

@@ -1,19 +1,18 @@
 package com.example.cheongyakhae
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.cheongyakhae.model.Announcement
+import com.example.cheongyakhae.databinding.FragmentAnnounceBinding
+import com.example.cheongyakhae.adapter.AnnouncementAdapter
+import com.example.cheongyakhae.Announcement
 import com.google.firebase.firestore.FirebaseFirestore
 
 class AnnounceFragment : Fragment() {
-
-    private lateinit var recyclerView: RecyclerView
+    private lateinit var binding: FragmentAnnounceBinding
     private lateinit var adapter: AnnouncementAdapter
     private val announcements = mutableListOf<Announcement>()
     private val db = FirebaseFirestore.getInstance()
@@ -21,22 +20,36 @@ class AnnounceFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_announce, container, false)
+    ): View {
+        binding = FragmentAnnounceBinding.inflate(inflater, container, false)
 
-        recyclerView = view.findViewById(R.id.announceRecyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        adapter = AnnouncementAdapter(announcements)
-        recyclerView.adapter = adapter
+        // RecyclerView 설정
+        adapter = AnnouncementAdapter(announcements) { announcement ->
+            // 상세 화면으로 이동
+            val bundle = Bundle().apply {
+                putString("announcement_title", announcement.announcement_title)
+                putString("house_type", announcement.house_type)
+                putString("house_detail_type", announcement.house_detail_type)
+                putString("announcement_date", announcement.announcement_date)
+                putInt("supply_household_count", announcement.supply_household_count ?: 0)
+                putString("contact_number", announcement.contact_number)
+            }
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.nav_host_fragment, DetailFragment().apply { arguments = bundle })
+                .addToBackStack(null)
+                .commit()
+        }
+        binding.announceRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.announceRecyclerView.adapter = adapter
 
-        fetchAnnouncements()  // Firestore에서 모든 데이터를 한 번에 불러옵니다.
+        fetchAnnouncements()
 
-        return view
+        return binding.root
     }
 
     private fun fetchAnnouncements() {
         db.collection("announcements")
-            .orderBy("announcement_date", com.google.firebase.firestore.Query.Direction.DESCENDING)  // 최신순으로 정렬
+            .orderBy("announcement_date", com.google.firebase.firestore.Query.Direction.DESCENDING)
             .get()
             .addOnSuccessListener { documents ->
                 announcements.clear()
@@ -46,25 +59,16 @@ class AnnounceFragment : Fragment() {
                         house_type = document.getString("house_type") ?: "No Type",
                         house_detail_type = document.getString("house_detail_type") ?: "No Detail Type",
                         announcement_date = document.getString("announcement_date") ?: "No Date",
-                        supply_household_count = document.getString("supply_household_count")?.toIntOrNull() ?: 0,
-                        business_name = document.getString("business_name") ?: "Unknown",
-                        address = document.getString("address") ?: "No Address",
-                        zip_code = document.getString("zip_code") ?: "No Zip",
-                        contact_number = document.getString("contact_number") ?: "No Contact",
-                        contract_date_start = document.getString("contract_date_start") ?: "No Start Date",
-                        contract_date_end = document.getString("contract_date_end") ?: "No End Date",
-                        move_in_date = document.getString("move_in_date") ?: "No Move-In Date",
-                        announcement_url = document.getString("announcement_url") ?: "No URL",
-                        source = document.getString("source") ?: "Unknown"
+                        supply_household_count = document.getString("supply_household_count")?.toIntOrNull()
+                            ?: 0,
+                        contact_number = document.getString("contact_number") ?: "No Contact"
                     )
                     announcements.add(announcement)
                 }
                 adapter.notifyDataSetChanged()
             }
-            .addOnFailureListener { exception ->
-                Log.e("AnnounceFragment", "Error fetching data", exception)
+            .addOnFailureListener {
+                // 로그 출력 등 에러 처리
             }
     }
-
-
 }

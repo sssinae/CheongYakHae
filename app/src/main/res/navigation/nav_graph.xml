@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.example.cheongyakhae.MainFragment"
+        android:label="Main" />
+
+    <fragment
+        android:id="@+id/announceFragment"
+        android:name="com.example.cheongyakhae.AnnounceFragment"
+        android:label="Announcements">
+        <action
+            android:id="@+id/action_announceFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.example.cheongyakhae.DetailFragment"
+        android:label="Detail" />
+    <fragment
+        android:id="@+id/informationFragment"
+        android:name="com.example.cheongyakhae.InformationFragment"
+        android:label="Detail" />
+    <fragment
+        android:id="@+id/mypageFragment"
+        android:name="com.example.cheongyakhae.MypageFragment"
+        android:label="Detail" />
+    <fragment
+        android:id="@+id/communityFragment"
+        android:name="com.example.cheongyakhae.CommunityFragment"
+        android:label="Detail" />
+
+    <fragment
+        android:id="@+id/signupFragment"
+        android:name="com.example.cheongyakhae.SignupFragment"
+        android:label="Detail" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.cheongyakhae.LoginFragment"
+        android:label="Detail" />
+    <fragment
+        android:id="@+id/writeFragment"
+        android:name="com.example.cheongyakhae.WriteFragment"
+        android:label="Detail" />
+    <fragment
+        android:id="@+id/updateFragment"
+        android:name="com.example.cheongyakhae.UpdateFragment"
+        android:label="Detail" />
+</navigation>
