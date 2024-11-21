@@ -1,4 +1,4 @@
-package com.example.cheongyakhae
+package com.example.cheongyakhae.activity
 
 import android.content.Intent
 import android.os.Bundle

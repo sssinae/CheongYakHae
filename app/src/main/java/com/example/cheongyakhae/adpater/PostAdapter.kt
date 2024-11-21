@@ -1,8 +1,9 @@
-package com.example.cheongyakhae
+package com.example.cheongyakhae.adpater
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.cheongyakhae.model.Post
 import com.example.cheongyakhae.databinding.ItemPostBinding
 
 class PostAdapter(private val posts: List<Post>) : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {

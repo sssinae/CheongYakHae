@@ -1,20 +1,18 @@
-package com.example.cheongyakhae
+package com.example.cheongyakhae.activity
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
-import androidx.fragment.app.Fragment
 import com.example.cheongyakhae.databinding.ActivityMainBinding
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.navigation.fragment.NavHostFragment
 import com.google.firebase.FirebaseApp
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.example.cheongyakhae.R
 
 
 class MainActivity : AppCompatActivity() {
@@ -40,7 +38,17 @@ class MainActivity : AppCompatActivity() {
 
         // AppBarConfiguration 설정
         val appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.mainFragment, R.id.announceFragment, R.id.communityFragment, R.id.mypageFragment, R.id.signupFragment, R.id.loginFragment, R.id.informationFragment, R.id.writeFragment, R.id.updateFragment),
+            setOf(
+                R.id.mainFragment,
+                R.id.announceFragment,
+                R.id.communityFragment,
+                R.id.mypageFragment,
+                R.id.signupFragment,
+                R.id.loginFragment,
+                R.id.informationFragment,
+                R.id.writeFragment,
+                R.id.updateFragment
+            ),
             binding.drawerLayout
         )
 

@@ -1,4 +1,4 @@
-package com.example.cheongyakhae
+package com.example.cheongyakhae.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.cheongyakhae.databinding.FragmentWriteBinding
+import com.example.cheongyakhae.model.Post
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.*

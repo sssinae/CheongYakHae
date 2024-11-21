@@ -1,4 +1,4 @@
-package com.example.cheongyakhae
+package com.example.cheongyakhae.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,9 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.cheongyakhae.R
 import com.example.cheongyakhae.databinding.FragmentAnnounceBinding
-import com.example.cheongyakhae.adapter.AnnouncementAdapter
-import com.example.cheongyakhae.Announcement
+import com.example.cheongyakhae.adpater.AnnouncementAdapter
+import com.example.cheongyakhae.model.Announcement
 import com.google.firebase.firestore.FirebaseFirestore
 
 class AnnounceFragment : Fragment() {

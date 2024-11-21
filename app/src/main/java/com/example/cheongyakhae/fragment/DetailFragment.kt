@@ -1,4 +1,4 @@
-package com.example.cheongyakhae
+package com.example.cheongyakhae.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater

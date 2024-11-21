@@ -1,4 +1,4 @@
-package com.example.cheongyakhae
+package com.example.cheongyakhae.fragment
 
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.example.cheongyakhae.R
 import com.google.firebase.auth.FirebaseAuth
 
 class SignupFragment : Fragment() {

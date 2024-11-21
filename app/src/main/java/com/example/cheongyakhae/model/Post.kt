@@ -1,4 +1,4 @@
-package com.example.cheongyakhae
+package com.example.cheongyakhae.model
 
 data class Post(
     val id: String = "",

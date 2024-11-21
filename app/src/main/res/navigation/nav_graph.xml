@@ -6,12 +6,12 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.example.cheongyakhae.MainFragment"
+        android:name="com.example.cheongyakhae.fragment.MainFragment"
         android:label="Main" />
 
     <fragment
         android:id="@+id/announceFragment"
-        android:name="com.example.cheongyakhae.AnnounceFragment"
+        android:name="com.example.cheongyakhae.fragment.AnnounceFragment"
         android:label="Announcements">
         <action
             android:id="@+id/action_announceFragment_to_detailFragment"
@@ -20,35 +20,35 @@
 
     <fragment
         android:id="@+id/detailFragment"
-        android:name="com.example.cheongyakhae.DetailFragment"
+        android:name="com.example.cheongyakhae.fragment.DetailFragment"
         android:label="Detail" />
     <fragment
         android:id="@+id/informationFragment"
-        android:name="com.example.cheongyakhae.InformationFragment"
+        android:name="com.example.cheongyakhae.fragment.InformationFragment"
         android:label="Detail" />
     <fragment
         android:id="@+id/mypageFragment"
-        android:name="com.example.cheongyakhae.MypageFragment"
+        android:name="com.example.cheongyakhae.fragment.MypageFragment"
         android:label="Detail" />
     <fragment
         android:id="@+id/communityFragment"
-        android:name="com.example.cheongyakhae.CommunityFragment"
+        android:name="com.example.cheongyakhae.fragment.CommunityFragment"
         android:label="Detail" />
 
     <fragment
         android:id="@+id/signupFragment"
-        android:name="com.example.cheongyakhae.SignupFragment"
+        android:name="com.example.cheongyakhae.fragment.SignupFragment"
         android:label="Detail" />
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.cheongyakhae.LoginFragment"
+        android:name="com.example.cheongyakhae.fragment.LoginFragment"
         android:label="Detail" />
     <fragment
         android:id="@+id/writeFragment"
-        android:name="com.example.cheongyakhae.WriteFragment"
+        android:name="com.example.cheongyakhae.fragment.WriteFragment"
         android:label="Detail" />
     <fragment
         android:id="@+id/updateFragment"
-        android:name="com.example.cheongyakhae.UpdateFragment"
+        android:name="com.example.cheongyakhae.fragment.UpdateFragment"
         android:label="Detail" />
 </navigation>

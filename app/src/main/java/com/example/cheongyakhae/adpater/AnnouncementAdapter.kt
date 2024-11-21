@@ -1,4 +1,4 @@
-package com.example.cheongyakhae.adapter
+package com.example.cheongyakhae.adpater
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cheongyakhae.R
-import com.example.cheongyakhae.Announcement
+import com.example.cheongyakhae.model.Announcement
 
 class AnnouncementAdapter(
     private val announcements: List<Announcement>,
