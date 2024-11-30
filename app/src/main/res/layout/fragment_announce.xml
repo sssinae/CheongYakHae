@@ -1,21 +1,202 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:background="@android:color/white"
+    android:fillViewport="true">
 
     <LinearLayout
-        android:id="@+id/pageLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:padding="8dp" />
+        android:orientation="vertical"
+        android:padding="8dp">
 
-    <!-- RecyclerView가 아래로 올 수 있도록 배치 -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/announceRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <!-- 필터 박스 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@android:color/darker_gray"
+            android:padding="8dp"
+            android:elevation="4dp">
 
-</LinearLayout>
+            <!-- 지역 필터 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="지역"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:padding="4dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="4dp"
+                android:paddingTop="4dp">
+
+                <TextView
+                    android:id="@+id/regionSeoul"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="서울"
+                    android:background="@drawable/textview_selector"
+                    android:padding="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:textColor="@android:color/black" />
+
+                <TextView
+                    android:id="@+id/regionBusan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="부산"
+                    android:background="@drawable/textview_selector"
+                    android:padding="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:textColor="@android:color/black" />
+
+                <TextView
+                    android:id="@+id/regionDaegu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="대구"
+                    android:background="@drawable/textview_selector"
+                    android:padding="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:textColor="@android:color/black" />
+            </LinearLayout>
+
+            <!-- 주택 유형 필터 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="주택 유형"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:padding="4dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="4dp"
+                android:paddingTop="4dp">
+
+                <TextView
+                    android:id="@+id/houseHappy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="행복주택"
+                    android:background="@drawable/textview_selector"
+                    android:padding="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:textColor="@android:color/black" />
+
+                <TextView
+                    android:id="@+id/houseYouth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="청년매입주택"
+                    android:background="@drawable/textview_selector"
+                    android:padding="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:textColor="@android:color/black" />
+
+                <TextView
+                    android:id="@+id/houseRedevelopment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="재개발임대주택"
+                    android:background="@drawable/textview_selector"
+                    android:padding="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:textColor="@android:color/black" />
+            </LinearLayout>
+
+            <!-- 지원 자격 필터 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="지원 자격"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:padding="4dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="4dp"
+                android:paddingTop="4dp">
+
+                <TextView
+                    android:id="@+id/qualificationYouth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="청년"
+                    android:background="@drawable/textview_selector"
+                    android:padding="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:textColor="@android:color/black" />
+
+                <TextView
+                    android:id="@+id/qualificationSingle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="신혼부부"
+                    android:background="@drawable/textview_selector"
+                    android:padding="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:textColor="@android:color/black" />
+
+                <TextView
+                    android:id="@+id/qualificationTwoChildren"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="다자녀"
+                    android:background="@drawable/textview_selector"
+                    android:padding="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:textColor="@android:color/black" />
+            </LinearLayout>
+
+            <!-- 필터 적용 버튼 추가 -->
+            <Button
+                android:id="@+id/applyFilterButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="필터 적용"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="@android:color/holo_blue_dark"
+                android:textColor="@android:color/white"
+                android:padding="12dp" />
+        </LinearLayout>
+
+        <!-- 선택된 필터 표시 -->
+        <TextView
+            android:id="@+id/selectedFilters"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="선택된 필터: "
+            android:textSize="14sp"
+            android:textStyle="italic"
+            android:padding="8dp" />
+
+        <!-- ProgressBar 추가 -->
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone" />
+
+        <!-- 공고 RecyclerView -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/announceRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"
+            android:paddingTop="8dp" />
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
