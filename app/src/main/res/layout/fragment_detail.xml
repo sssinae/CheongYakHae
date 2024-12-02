@@ -6,11 +6,11 @@
     android:padding="16dp">
 
     <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <!-- 공고 제목 -->
+        <!-- 제목 -->
         <TextView
             android:id="@+id/announcementTitle"
             android:layout_width="match_parent"
@@ -18,47 +18,51 @@
             android:text="공고 제목"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:layout_marginBottom="16dp" />
+            android:paddingBottom="8dp" />
 
         <!-- 주택 유형 -->
         <TextView
             android:id="@+id/houseType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="주택 유형"
-            android:layout_marginBottom="8dp" />
+            android:text="Type: 행복주택" />
 
         <!-- 세부 유형 -->
         <TextView
             android:id="@+id/houseDetailType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="세부 유형"
-            android:layout_marginBottom="8dp" />
+            android:text="Detail Type: 청년형" />
 
-        <!-- 날짜 -->
+        <!-- 공고 날짜 -->
         <TextView
             android:id="@+id/announcementDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="날짜"
-            android:layout_marginBottom="8dp" />
+            android:text="Date: 2023-11-26" />
 
-        <!-- 공급 가구 수 -->
+        <!-- 공급 세대 수 -->
         <TextView
             android:id="@+id/supplyHouseholdCount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="공급 가구 수"
-            android:layout_marginBottom="8dp" />
+            android:text="Supply: 20" />
 
-        <!-- 연락처 -->
+        <!-- 문의 번호 -->
         <TextView
             android:id="@+id/contactNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="연락처"
-            android:layout_marginBottom="8dp" />
+            android:text="Contact: 123-456-7890" />
 
+        <!-- URL -->
+        <TextView
+            android:id="@+id/announcementUrl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/holo_blue_light"
+            android:text="URL: See more details"
+            android:paddingTop="8dp"
+            android:textSize="16sp" />
     </LinearLayout>
 </ScrollView>
