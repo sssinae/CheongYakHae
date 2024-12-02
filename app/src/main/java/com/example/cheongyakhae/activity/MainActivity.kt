@@ -4,75 +4,40 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
-import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
 import com.example.cheongyakhae.databinding.ActivityMainBinding
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.NavController
 import com.google.firebase.FirebaseApp
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.cheongyakhae.R
+
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var toggle: ActionBarDrawerToggle
-    private lateinit var navController: NavController
-    private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         FirebaseApp.initializeApp(this)
 
+        // viewBinding
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // 초기화 순서 변경: toggle 초기화 먼저 수행
-        initializeToolbar()
-        initializeDrawerToggle() // toggle 먼저 초기화
-        configureNavigationController()
-        setNavigationMenuClickListener()
-        setToolbarLogoNavigation()
-        setHeaderNavigationListeners()
-
-        // 뒤로가기 버튼 동작 처리
-        handleBackPressed()
-    }
-
-    private fun initializeToolbar() {
-        val toolbar: Toolbar = binding.toolbar
-        setSupportActionBar(toolbar)
+        // Toolbar 설정
+        setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
-    }
 
-    private fun initializeDrawerToggle() {
-        toggle = ActionBarDrawerToggle(
-            this,
-            binding.drawerLayout,
-            binding.toolbar,
-            R.string.navigation_drawer_open,
-            R.string.navigation_drawer_close
-        )
-        binding.drawerLayout.addDrawerListener(toggle)
-        toggle.syncState()
-
-        // 드로어가 닫힐 때 선택된 항목 해제
-        binding.drawerLayout.addDrawerListener(object : DrawerLayout.SimpleDrawerListener() {
-            override fun onDrawerClosed(drawerView: android.view.View) {
-                clearDrawerSelection()
-            }
-        })
-    }
-
-    private fun configureNavigationController() {
+        // 네비게이션 설정
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        navController = navHostFragment.navController
-        appBarConfiguration = AppBarConfiguration(
+        val navController = navHostFragment.navController
+        setupActionBarWithNavController(navController)
+
+        // AppBarConfiguration 설정
+        val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.mainFragment,
                 R.id.announceFragment,
@@ -86,19 +51,28 @@ class MainActivity : AppCompatActivity() {
             ),
             binding.drawerLayout
         )
+
         setupActionBarWithNavController(navController, appBarConfiguration)
 
-        // DetailFragment에서는 드로어를 잠그고, 다른 화면에서는 잠금 해제
-        navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id == R.id.detailFragment) {
-                binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-            } else {
-                binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
-            }
-        }
-    }
+        // 햄버거 버튼 설정
+        toggle = ActionBarDrawerToggle(
+            this,
+            binding.drawerLayout,
+            binding.toolbar,
+            R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close
+        )
+        binding.drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
 
-    private fun setNavigationMenuClickListener() {
+        // 로고 클릭 시 메인 프래그먼트로 이동
+        val toolbarTitle = binding.toolbar.findViewById<TextView>(R.id.toolbar_title)
+        toolbarTitle.setOnClickListener {
+            navController.navigate(R.id.mainFragment)
+            setupActionBarWithNavController(navController, appBarConfiguration)
+        }
+
+        // 네비게이션 메뉴 클릭 처리
         binding.navigationView.setNavigationItemSelectedListener { menuItem ->
             val destinationId = when (menuItem.itemId) {
                 R.id.nav_info -> R.id.informationFragment
@@ -107,38 +81,33 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_mypage -> R.id.mypageFragment
                 else -> R.id.mainFragment
             }
-            if (navController.currentDestination?.id != destinationId) {
-                navController.navigate(destinationId)
-                menuItem.isChecked = true
-            }
+            navController.navigate(destinationId)
+            clearDrawerSelection()
             binding.drawerLayout.closeDrawer(GravityCompat.START)
             true
         }
-    }
 
-    private fun setToolbarLogoNavigation() {
-        val toolbarTitle = binding.toolbar.findViewById<TextView>(R.id.toolbar_title)
-        toolbarTitle.setOnClickListener {
-            navController.navigate(R.id.mainFragment)
-        }
-    }
 
-    private fun setHeaderNavigationListeners() {
+
+        // 네비게이션 헤더 클릭 이벤트
         val headerView = binding.navigationView.getHeaderView(0)
         val loginTextView = headerView.findViewById<TextView>(R.id.login)
         val signupTextView = headerView.findViewById<TextView>(R.id.signup)
 
+        // 로그인 클릭 리스너
         loginTextView.setOnClickListener {
-            navController.navigate(R.id.loginFragment)
+            navController.navigate(R.id.loginFragment) // Navigation Graph에 정의된 ID 사용
             binding.drawerLayout.closeDrawer(GravityCompat.START)
         }
 
+        // 회원가입 클릭 리스너
         signupTextView.setOnClickListener {
-            navController.navigate(R.id.signupFragment)
+            navController.navigate(R.id.signupFragment) // Navigation Graph에 정의된 ID 사용
             binding.drawerLayout.closeDrawer(GravityCompat.START)
         }
-    }
 
+
+    }
     private fun clearDrawerSelection() {
         val menu = binding.navigationView.menu
         for (i in 0 until menu.size()) {
@@ -146,20 +115,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun handleBackPressed() {
-        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                if (navController.currentDestination?.id == R.id.detailFragment) {
-                    navController.popBackStack()
-                } else if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
-                    binding.drawerLayout.closeDrawer(GravityCompat.START)
-                } else {
-                    isEnabled = false // 기본 뒤로가기 동작 실행
-                    onBackPressedDispatcher.onBackPressed()
-                }
-            }
-        })
-    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (toggle.onOptionsItemSelected(item)) return true
@@ -170,10 +125,11 @@ class MainActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.toolbar_menu, menu)
         return true
     }
-
     override fun onSupportNavigateUp(): Boolean {
-        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
+        return navController.navigateUp() || super.onSupportNavigateUp()
     }
-
 
 }

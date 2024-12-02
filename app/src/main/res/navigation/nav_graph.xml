@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/mainFragment">
 
-    <!-- Main Fragment -->
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.example.cheongyakhae.fragment.MainFragment"
         android:label="Main" />
 
-    <!-- Announce Fragment -->
     <fragment
         android:id="@+id/announceFragment"
         android:name="com.example.cheongyakhae.fragment.AnnounceFragment"
@@ -21,63 +18,37 @@
             app:destination="@id/detailFragment" />
     </fragment>
 
-    <!-- Detail Fragment -->
     <fragment
         android:id="@+id/detailFragment"
         android:name="com.example.cheongyakhae.fragment.DetailFragment"
-        android:label="Detail"
-        tools:layout="@layout/fragment_detail">
-        <action
-            android:id="@+id/action_detailFragment_to_announceFragment"
-            app:destination="@id/announceFragment" />
-    </fragment>
-
-    <!-- Information Fragment -->
+        android:label="Detail" />
     <fragment
         android:id="@+id/informationFragment"
         android:name="com.example.cheongyakhae.fragment.InformationFragment"
-        android:label="Information"
-        tools:layout="@layout/fragment_information" />
-
-    <!-- My Page Fragment -->
+        android:label="Detail" />
     <fragment
         android:id="@+id/mypageFragment"
         android:name="com.example.cheongyakhae.fragment.MypageFragment"
-        android:label="My Page"
-        tools:layout="@layout/fragment_mypage" />
-
-    <!-- Community Fragment -->
+        android:label="Detail" />
     <fragment
         android:id="@+id/communityFragment"
         android:name="com.example.cheongyakhae.fragment.CommunityFragment"
-        android:label="Community"
-        tools:layout="@layout/fragment_community" />
+        android:label="Detail" />
 
-    <!-- Signup Fragment -->
     <fragment
         android:id="@+id/signupFragment"
         android:name="com.example.cheongyakhae.fragment.SignupFragment"
-        android:label="Signup"
-        tools:layout="@layout/fragment_signup" />
-
-    <!-- Login Fragment -->
+        android:label="Detail" />
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.cheongyakhae.fragment.LoginFragment"
-        android:label="Login"
-        tools:layout="@layout/fragment_login" />
-
-    <!-- Write Fragment -->
+        android:label="Detail" />
     <fragment
         android:id="@+id/writeFragment"
         android:name="com.example.cheongyakhae.fragment.WriteFragment"
-        android:label="Write"
-        tools:layout="@layout/fragment_write" />
-
-    <!-- Update Fragment -->
+        android:label="Detail" />
     <fragment
         android:id="@+id/updateFragment"
         android:name="com.example.cheongyakhae.fragment.UpdateFragment"
-        android:label="Update"
-        tools:layout="@layout/fragment_update" />
+        android:label="Detail" />
 </navigation>
