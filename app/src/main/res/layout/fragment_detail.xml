@@ -3,66 +3,108 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="#F9F9F9">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <!-- 제목 -->
+        <!-- 공고 제목 -->
         <TextView
             android:id="@+id/announcementTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="공고 제목"
-            android:textSize="20sp"
             android:textStyle="bold"
-            android:paddingBottom="8dp" />
+            android:textSize="22sp"
+            android:textColor="@android:color/black"
+            android:paddingBottom="12dp" />
 
         <!-- 주택 유형 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="🏠 주택 유형"
+            android:textStyle="bold"
+            android:textColor="@android:color/darker_gray"/>
         <TextView
             android:id="@+id/houseType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Type: 행복주택" />
+            android:textColor="@android:color/black"
+            android:paddingBottom="8dp" />
 
         <!-- 세부 유형 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="🔍 세부 유형"
+            android:textStyle="bold"
+            android:textColor="@android:color/darker_gray"/>
         <TextView
             android:id="@+id/houseDetailType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Detail Type: 청년형" />
+            android:textColor="@android:color/black"
+            android:paddingBottom="8dp" />
 
         <!-- 공고 날짜 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="📅 공고 날짜"
+            android:textStyle="bold"
+            android:textColor="@android:color/darker_gray"/>
         <TextView
             android:id="@+id/announcementDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Date: 2023-11-26" />
+            android:textColor="@android:color/black"
+            android:paddingBottom="8dp" />
 
         <!-- 공급 세대 수 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="🏢 공급 세대 수"
+            android:textStyle="bold"
+            android:textColor="@android:color/darker_gray"/>
         <TextView
             android:id="@+id/supplyHouseholdCount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Supply: 20" />
+            android:textColor="@android:color/black"
+            android:paddingBottom="8dp" />
 
         <!-- 문의 번호 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="📞 문의 번호"
+            android:textStyle="bold"
+            android:textColor="@android:color/darker_gray"/>
         <TextView
             android:id="@+id/contactNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Contact: 123-456-7890" />
+            android:textColor="@android:color/black"
+            android:paddingBottom="8dp" />
 
-        <!-- URL -->
+        <!-- 공고 URL -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="🔗 공고 URL로 이동하기:"
+            android:textStyle="bold"
+            android:textColor="@android:color/darker_gray"
+            android:paddingBottom="4dp"/>
         <TextView
             android:id="@+id/announcementUrl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@android:color/holo_blue_light"
-            android:text="URL: See more details"
-            android:paddingTop="8dp"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:paddingBottom="16dp" />
     </LinearLayout>
 </ScrollView>

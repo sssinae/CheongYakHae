@@ -16,6 +16,9 @@ import com.example.cheongyakhae.model.Announcement
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QueryDocumentSnapshot
+import java.text.NumberFormat
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class AnnounceFragment : Fragment() {
     private var _binding: FragmentAnnounceBinding? = null
@@ -42,7 +45,7 @@ class AnnounceFragment : Fragment() {
         // 뒤로 가기 콜백 설정
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().popBackStack() // 이전 페이지로 이동
+                findNavController().popBackStack()
             }
         })
 
@@ -66,21 +69,19 @@ class AnnounceFragment : Fragment() {
     }
 
     private fun navigateToDetailFragment(announcement: Announcement) {
-        // 상세 화면으로 이동
         val bundle = Bundle().apply {
             putString("announcement_title", announcement.announcement_title)
             putString("house_type", announcement.house_type)
             putString("house_detail_type", announcement.house_detail_type)
-            putString("announcement_date", announcement.announcement_date)
-            putInt("supply_household_count", announcement.supply_household_count ?: 0)
-            putString("contact_number", announcement.contact_number)
+            putString("announcement_date", formatDate(announcement.announcement_date))
+            putString("supply_household_count", formatNumber(announcement.supply_household_count))
+            putString("contact_number", formatPhoneNumber(announcement.contact_number))
             putString("announcement_url", announcement.announcement_url)
         }
         findNavController().navigate(R.id.action_announceFragment_to_detailFragment, bundle)
     }
 
     private fun setupFilterListeners() {
-        // 텍스트뷰와 필터 이름 매핑
         val filters = mapOf(
             binding.regionSeoul to "서울",
             binding.regionBusan to "부산",
@@ -93,29 +94,25 @@ class AnnounceFragment : Fragment() {
             binding.qualificationTwoChildren to "다자녀"
         )
 
-        // 텍스트뷰 클릭 리스너 설정
         filters.forEach { (view, filter) ->
             view.setOnClickListener {
                 if (selectedFilters.contains(filter)) {
-                    selectedFilters.remove(filter) // 선택 해제
-                    view.setBackgroundResource(R.drawable.textview_selector) // 기본 배경으로 복구
+                    selectedFilters.remove(filter)
+                    view.setBackgroundResource(R.drawable.textview_selector)
                 } else {
-                    selectedFilters.add(filter) // 선택
-                    view.setBackgroundResource(R.drawable.textview_selector_selected) // 선택된 배경
+                    selectedFilters.add(filter)
+                    view.setBackgroundResource(R.drawable.textview_selector_selected)
                 }
                 updateSelectedFiltersDisplay()
             }
         }
 
-        // 필터 적용 버튼 클릭 리스너
         binding.applyFilterButton.setOnClickListener {
-            fetchFilteredAnnouncements() // 선택된 필터 기반으로 Firestore에서 데이터 가져오기
+            fetchFilteredAnnouncements()
         }
     }
 
-
     private fun updateSelectedFiltersDisplay() {
-        // 선택된 필터를 해시태그 형태로 표시
         binding.selectedFilters.text = "선택된 필터: ${selectedFilters.joinToString(" #") { it }}"
     }
 
@@ -134,8 +131,7 @@ class AnnounceFragment : Fragment() {
                 adapter.notifyDataSetChanged()
                 binding.progressBar.visibility = View.GONE
             }
-            .addOnFailureListener { exception ->
-                exception.printStackTrace()
+            .addOnFailureListener {
                 Toast.makeText(requireContext(), "데이터를 불러오는데 실패했습니다.", Toast.LENGTH_SHORT).show()
                 binding.progressBar.visibility = View.GONE
             }
@@ -145,8 +141,6 @@ class AnnounceFragment : Fragment() {
         binding.progressBar.visibility = View.VISIBLE
 
         var query: Query = db.collection("announcements").orderBy("announcement_date", Query.Direction.DESCENDING)
-
-        // 선택된 필터를 Firestore 쿼리에 추가
         selectedFilters.forEach { filter ->
             query = query.whereArrayContains("filters", filter)
         }
@@ -161,8 +155,7 @@ class AnnounceFragment : Fragment() {
                 adapter.notifyDataSetChanged()
                 binding.progressBar.visibility = View.GONE
             }
-            .addOnFailureListener { exception ->
-                exception.printStackTrace()
+            .addOnFailureListener {
                 Toast.makeText(requireContext(), "필터링된 데이터를 가져오는데 실패했습니다.", Toast.LENGTH_SHORT).show()
                 binding.progressBar.visibility = View.GONE
             }
@@ -171,13 +164,34 @@ class AnnounceFragment : Fragment() {
     private fun parseDocumentToAnnouncement(document: QueryDocumentSnapshot): Announcement {
         val supplyHouseholdCount = document.get("supply_household_count")?.toString()?.toIntOrNull() ?: 0
         return Announcement(
-            announcement_title = document.getString("announcement_title") ?: "No Title",
-            house_type = document.getString("house_type") ?: "No Type",
-            house_detail_type = document.getString("house_detail_type") ?: "No Detail Type",
-            announcement_date = document.getString("announcement_date") ?: "No Date",
+            announcement_title = document.getString("announcement_title") ?: "제목 없음",
+            house_type = document.getString("house_type") ?: "유형 없음",
+            house_detail_type = document.getString("house_detail_type") ?: "세부 유형 없음",
+            announcement_date = document.getString("announcement_date") ?: "날짜 없음",
             supply_household_count = supplyHouseholdCount,
-            contact_number = document.getString("contact_number") ?: "No Contact",
-            announcement_url = document.getString("announcement_url") ?: "No URL"
+            contact_number = document.getString("contact_number") ?: "연락처 없음",
+            announcement_url = document.getString("announcement_url") ?: "URL 없음"
         )
+    }
+
+    // 날짜 포맷 함수
+    private fun formatDate(date: String?): String {
+        return try {
+            val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.KOREA)
+            val outputFormat = SimpleDateFormat("yyyy년 MM월 dd일", Locale.KOREA)
+            inputFormat.parse(date ?: "")?.let { outputFormat.format(it) } ?: "날짜 없음"
+        } catch (e: Exception) {
+            "날짜 없음"
+        }
+    }
+
+    // 숫자 포맷 함수
+    private fun formatNumber(number: Int?): String {
+        return number?.let { "${NumberFormat.getInstance(Locale.KOREA).format(it)} 세대" } ?: "정보 없음"
+    }
+
+    // 전화번호 포맷 함수
+    private fun formatPhoneNumber(phone: String?): String {
+        return phone?.replace("(\\d{3})(\\d{4})(\\d{4})".toRegex(), "$1-$2-$3") ?: "연락처 없음"
     }
 }

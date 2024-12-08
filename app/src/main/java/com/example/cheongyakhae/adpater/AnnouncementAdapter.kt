@@ -15,19 +15,13 @@ class AnnouncementAdapter(
 
     inner class AnnouncementViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val title: TextView = itemView.findViewById(R.id.announcement_title)
-        val houseType: TextView = itemView.findViewById(R.id.house_type)
-        val houseDetailType: TextView = itemView.findViewById(R.id.house_detail_type)
         val date: TextView = itemView.findViewById(R.id.announcement_date)
-        val supplyCount: TextView = itemView.findViewById(R.id.supply_household_count)
-        val contactNumber: TextView = itemView.findViewById(R.id.contact_number)
+        val houseType: TextView = itemView.findViewById(R.id.house_type)
 
         fun bind(announcement: Announcement) {
             title.text = announcement.announcement_title
-            houseType.text = announcement.house_type
-            houseDetailType.text = announcement.house_detail_type
-            date.text = "Date: ${announcement.announcement_date}"
-            supplyCount.text = "Supply: ${announcement.supply_household_count ?: 0}"
-            contactNumber.text = "Contact: ${announcement.contact_number ?: "N/A"}"
+            date.text = "날짜: ${announcement.announcement_date}"
+            houseType.text = "유형: ${announcement.house_type}"
 
             itemView.setOnClickListener { onClick(announcement) }
         }
