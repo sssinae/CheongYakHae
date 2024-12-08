@@ -101,10 +101,13 @@
             android:paddingBottom="4dp"/>
         <TextView
             android:id="@+id/announcementUrl"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/holo_blue_light"
-            android:textSize="16sp"
-            android:paddingBottom="16dp" />
+            android:textColor="@android:color/holo_blue_dark"
+            android:text="공고 URL로 이동하기: https://example.com"
+            android:clickable="true"
+            android:autoLink="web"
+            android:textSize="16sp" />
+
     </LinearLayout>
 </ScrollView>

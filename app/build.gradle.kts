@@ -24,7 +24,7 @@ android {
         properties.load(FileInputStream(rootProject.file("local.properties")))
         buildConfigField("String", "KAKAO_MAP_KEY", "\"${properties.getProperty("KAKAO_MAP_KEY")}\"")
         ndk {
-            abiFilters += listOf("armeabi-v7a", "arm64-v8a") //, "x86", "x86_64"
+            abiFilters += listOf("armeabi-v7a", "arm64-v8a", "x86", "x86_64")
         }
     }
 
