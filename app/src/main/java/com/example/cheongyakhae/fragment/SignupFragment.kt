@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.cheongyakhae.R
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class SignupFragment : Fragment() {
 
@@ -63,18 +64,46 @@ class SignupFragment : Fragment() {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    // 회원가입 성공
-                    Toast.makeText(requireContext(), "회원가입 성공!", Toast.LENGTH_SHORT).show()
-                    Log.d("SignupFragment", "회원가입 성공: ${auth.currentUser?.email}")
+                    // Firestore에 사용자 정보 저장
+                    val userId = auth.currentUser?.uid
+                    val db = FirebaseFirestore.getInstance()
+                    val user = hashMapOf(
+                        "email" to email
+                    )
+                    userId?.let {
+                        db.collection("users").document(it)
+                            .set(user)
+                            .addOnSuccessListener {
+                                Toast.makeText(requireContext(), "회원가입 성공!", Toast.LENGTH_SHORT).show()
+                                Log.d("SignupFragment", "Firestore에 사용자 저장 성공")
+                            }
+                            .addOnFailureListener { e ->
+                                Toast.makeText(requireContext(), "Firestore 저장 실패: ${e.message}", Toast.LENGTH_SHORT).show()
+                            }
+                    }
                 } else {
-                    // 회원가입 실패
-                    Toast.makeText(
-                        requireContext(),
-                        "회원가입 실패: ${task.exception?.message}",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    Log.e("SignupFragment", "회원가입 실패", task.exception)
+                    Toast.makeText(requireContext(), "회원가입 실패: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                 }
             }
     }
+
+    private fun saveUserToFirestore(userId: String?, email: String) {
+        if (userId == null) return
+
+        val db = FirebaseFirestore.getInstance()
+        val user = hashMapOf(
+            "email" to email,
+            "createdAt" to System.currentTimeMillis()
+        )
+
+        db.collection("users").document(userId)
+            .set(user)
+            .addOnSuccessListener {
+                Log.d("SignupFragment", "유저 정보 Firestore에 저장 성공")
+            }
+            .addOnFailureListener { e ->
+                Log.e("SignupFragment", "유저 정보 Firestore에 저장 실패", e)
+            }
+    }
+
 }

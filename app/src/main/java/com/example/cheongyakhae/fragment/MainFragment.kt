@@ -42,7 +42,7 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // KakaoMap 초기화
-        showMapView()
+        initializeMapView()
 
         // RecyclerView 초기화
         setupRecyclerView()
@@ -51,21 +51,22 @@ class MainFragment : Fragment() {
         fetchLatestAnnouncements()
     }
 
-    private fun showMapView() {
+    private fun initializeMapView() {
         mapView = binding.mapView
         KakaoMapSdk.init(requireContext(), KAKAO_MAP_KEY)
 
         mapView.start(object : MapLifeCycleCallback() {
             override fun onMapDestroy() {
-                Log.d("KakaoMap", "onMapDestroy")
+                Log.d("KakaoMap", "Map destroyed")
             }
 
-            override fun onMapError(p0: Exception?) {
-                Log.e("KakaoMap", "onMapError")
+            override fun onMapError(e: Exception?) {
+                Log.e("KakaoMap", "Error: ${e?.message}")
             }
         }, object : KakaoMapReadyCallback() {
             override fun onMapReady(kakaomap: KakaoMap) {
                 kakaoMap = kakaomap
+                Log.d("KakaoMap", "Map is ready")
             }
         })
     }
@@ -81,19 +82,12 @@ class MainFragment : Fragment() {
     private fun fetchLatestAnnouncements() {
         db.collection("announcements")
             .orderBy("announcement_date", Query.Direction.DESCENDING)
-            .limit(5)  // 최신 5개 공고만 가져오기
+            .limit(5)
             .get()
             .addOnSuccessListener { documents ->
                 announcements.clear()
                 for (document in documents) {
                     val data = document.data
-
-                    val supplyCount = when (val count = data["supply_household_count"]) {
-                        is Long -> count.toInt()           // Firestore에서 숫자를 Long으로 반환할 경우
-                        is String -> count.toIntOrNull()   // 문자열인 경우 Int로 변환 시도
-                        else -> null                       // 다른 타입이거나 변환에 실패하면 null
-                    }
-
                     val announcement = Announcement(
                         business_name = data["business_name"] as? String ?: "Unknown",
                         announcement_title = data["announcement_title"] as? String ?: "No Title",
@@ -102,7 +96,7 @@ class MainFragment : Fragment() {
                         address = data["address"] as? String ?: "No Address",
                         zip_code = data["zip_code"] as? String,
                         contact_number = data["contact_number"] as? String,
-                        supply_household_count = supplyCount,
+                        supply_household_count = (data["supply_household_count"] as? Number)?.toInt(),
                         announcement_date = data["announcement_date"] as? String ?: "No Date",
                         contract_date_start = data["contract_date_start"] as? String ?: "No Start Date",
                         contract_date_end = data["contract_date_end"] as? String ?: "No End Date",
@@ -110,16 +104,14 @@ class MainFragment : Fragment() {
                         announcement_url = data["announcement_url"] as? String ?: "No URL",
                         source = data["source"] as? String ?: "Unknown"
                     )
-
                     announcements.add(announcement)
                 }
                 adapter.notifyDataSetChanged()
             }
-            .addOnFailureListener { exception ->
+            .addOnFailureListener {
                 Toast.makeText(requireContext(), "데이터를 불러오지 못했습니다.", Toast.LENGTH_SHORT).show()
             }
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

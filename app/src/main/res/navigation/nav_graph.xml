@@ -51,7 +51,13 @@
         android:id="@+id/communityFragment"
         android:name="com.example.cheongyakhae.fragment.CommunityFragment"
         android:label="Community"
-        tools:layout="@layout/fragment_community" />
+        tools:layout="@layout/fragment_community">
+
+        <!-- CommunityFragment -> WriteFragment로 이동하는 action -->
+        <action
+            android:id="@+id/action_communityFragment_to_writeFragment"
+            app:destination="@id/writeFragment" />
+    </fragment>
 
     <!-- Signup Fragment -->
     <fragment
@@ -74,10 +80,10 @@
         android:label="Write"
         tools:layout="@layout/fragment_write" />
 
-    <!-- Update Fragment -->
-    <fragment
-        android:id="@+id/updateFragment"
-        android:name="com.example.cheongyakhae.fragment.UpdateFragment"
-        android:label="Update"
-        tools:layout="@layout/fragment_update" />
+<!--    &lt;!&ndash; Update Fragment &ndash;&gt;-->
+<!--    <fragment-->
+<!--        android:id="@+id/updateFragment"-->
+<!--        android:name="com.example.cheongyakhae.fragment.UpdateFragment"-->
+<!--        android:label="Update"-->
+<!--        tools:layout="@layout/fragment_update" />-->
 </navigation>
