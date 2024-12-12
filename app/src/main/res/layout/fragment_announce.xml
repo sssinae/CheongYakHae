@@ -37,25 +37,120 @@
                     android:paddingBottom="8dp"
                     android:textColor="@android:color/black" />
 
+                <!-- 지역 필터 행 -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/regionSeoul"
-                        style="@style/FilterTextView"
-                        android:text="서울" />
+                    <!-- 첫 번째 행 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="8dp">
 
-                    <TextView
-                        android:id="@+id/regionBusan"
-                        style="@style/FilterTextView"
-                        android:text="부산" />
+                        <TextView
+                            android:id="@+id/regionSeoul"
+                            style="@style/FilterTextView"
+                            android:text="서울" />
 
-                    <TextView
-                        android:id="@+id/regionDaegu"
-                        style="@style/FilterTextView"
-                        android:text="대구" />
+                        <TextView
+                            android:id="@+id/regionBusan"
+                            style="@style/FilterTextView"
+                            android:text="부산" />
+
+                        <TextView
+                            android:id="@+id/regionDaegu"
+                            style="@style/FilterTextView"
+                            android:text="대구" />
+
+                        <TextView
+                            android:id="@+id/regionIncheon"
+                            style="@style/FilterTextView"
+                            android:text="인천" />
+
+                        <TextView
+                            android:id="@+id/regionGwangju"
+                            style="@style/FilterTextView"
+                            android:text="광주" />
+
+                        <TextView
+                            android:id="@+id/regionDaejeon"
+                            style="@style/FilterTextView"
+                            android:text="대전" />
+
+
+                    </LinearLayout>
+
+                    <!-- 두 번째 행 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="8dp">
+
+                        <TextView
+                            android:id="@+id/regionUlsan"
+                            style="@style/FilterTextView"
+                            android:text="울산" />
+                        <TextView
+                            android:id="@+id/regionSejong"
+                            style="@style/FilterTextView"
+                            android:text="세종" />
+
+                        <TextView
+                            android:id="@+id/regionGyeonggi"
+                            style="@style/FilterTextView"
+                            android:text="경기" />
+
+                        <TextView
+                            android:id="@+id/regionGangwon"
+                            style="@style/FilterTextView"
+                            android:text="강원" />
+
+                        <TextView
+                            android:id="@+id/regionChungbuk"
+                            style="@style/FilterTextView"
+                            android:text="충북" />
+
+                        <TextView
+                            android:id="@+id/regionChungnam"
+                            style="@style/FilterTextView"
+                            android:text="충남" />
+
+                    </LinearLayout>
+
+                    <!-- 세 번째 행 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="8dp">
+                        <TextView
+                            android:id="@+id/regionJeonbuk"
+                            style="@style/FilterTextView"
+                            android:text="전북" />
+
+                        <TextView
+                            android:id="@+id/regionJeonnam"
+                            style="@style/FilterTextView"
+                            android:text="전남" />
+                        <TextView
+                            android:id="@+id/regionGyeongbuk"
+                            style="@style/FilterTextView"
+                            android:text="경북" />
+
+                        <TextView
+                            android:id="@+id/regionGyeongnam"
+                            style="@style/FilterTextView"
+                            android:text="경남" />
+
+                        <TextView
+                            android:id="@+id/regionJeju"
+                            style="@style/FilterTextView"
+                            android:text="제주" />
+                    </LinearLayout>
                 </LinearLayout>
 
                 <!-- 주택 유형 필터 -->
@@ -72,22 +167,44 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="8dp">
 
                     <TextView
-                        android:id="@+id/houseHappy"
+                        android:id="@+id/houseLand"
                         style="@style/FilterTextView"
-                        android:text="행복주택" />
+                        android:text="토지" />
 
                     <TextView
-                        android:id="@+id/houseYouth"
+                        android:id="@+id/houseSale"
                         style="@style/FilterTextView"
-                        android:text="청년매입주택" />
+                        android:text="분양주택" />
 
                     <TextView
-                        android:id="@+id/houseRedevelopment"
+                        android:id="@+id/houseLease"
                         style="@style/FilterTextView"
-                        android:text="재개발임대주택" />
+                        android:text="임대주택" />
+
+                    <TextView
+                        android:id="@+id/houseWelfare"
+                        style="@style/FilterTextView"
+                        android:text="주거복지" />
+                    <TextView
+                        android:id="@+id/houseShop"
+                        style="@style/FilterTextView"
+                        android:text="상가" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="8dp">
+                    <TextView
+                        android:id="@+id/houseNewlyWed"
+                        style="@style/FilterTextView"
+                        android:text="신혼희망타운" />
                 </LinearLayout>
 
                 <!-- 지원 자격 필터 -->
@@ -97,8 +214,8 @@
                     android:text="지원 자격"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:paddingTop="16dp"
                     android:paddingBottom="8dp"
+                    android:paddingTop="16dp"
                     android:textColor="@android:color/black" />
 
                 <LinearLayout
@@ -153,7 +270,7 @@
             android:layout_gravity="center"
             android:visibility="gone" />
 
-        <!-- 공고 RecyclerView -->
+        <!-- RecyclerView -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/announceRecyclerView"
             android:layout_width="match_parent"

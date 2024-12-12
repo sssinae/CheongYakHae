@@ -7,6 +7,60 @@
     android:background="#F5F5F5"
     android:padding="8dp">
 
+    <!-- 상단 네 개의 버튼 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingBottom="16dp"
+        android:weightSum="4"> <!-- weightSum 유지 -->
+
+        <Button
+            android:id="@+id/btn_info"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="4dp"
+            android:text="청약 정보"
+            android:backgroundTint="#FF6200EE"
+            android:textColor="@android:color/white"
+            android:textSize="10sp" /> <!-- 글자 크기 줄임 -->
+
+        <Button
+            android:id="@+id/btn_announce"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="4dp"
+            android:text="전체 공고"
+            android:backgroundTint="#FF018786"
+            android:textColor="@android:color/white"
+            android:textSize="10sp" />
+
+        <Button
+            android:id="@+id/btn_community"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="4dp"
+            android:text="커뮤니티"
+            android:backgroundTint="#FF3700B3"
+            android:textColor="@android:color/white"
+            android:textSize="10sp" />
+
+        <Button
+            android:id="@+id/btn_mypage"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="4dp"
+            android:text="마이페이지"
+            android:backgroundTint="#FF03DAC5"
+            android:textColor="@android:color/white"
+            android:textSize="9sp" />
+    </LinearLayout>
+
     <!-- 상단 요약 정보 카드 -->
     <LinearLayout
         android:layout_width="match_parent"

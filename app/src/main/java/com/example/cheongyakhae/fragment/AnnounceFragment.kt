@@ -5,20 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cheongyakhae.R
-import com.example.cheongyakhae.databinding.FragmentAnnounceBinding
 import com.example.cheongyakhae.adpater.AnnouncementAdapter
+import com.example.cheongyakhae.databinding.FragmentAnnounceBinding
 import com.example.cheongyakhae.model.Announcement
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QueryDocumentSnapshot
-import java.text.NumberFormat
-import java.text.SimpleDateFormat
-import java.util.Locale
 
 class AnnounceFragment : Fragment() {
     private var _binding: FragmentAnnounceBinding? = null
@@ -27,8 +23,8 @@ class AnnounceFragment : Fragment() {
     private val announcements = mutableListOf<Announcement>()
     private val db = FirebaseFirestore.getInstance()
 
-    // 선택된 필터를 저장하는 Set
-    private val selectedFilters = mutableSetOf<String>()
+    // 선택된 필터를 저장하는 Map
+    private val selectedFilters = mutableMapOf<String, String>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,20 +32,8 @@ class AnnounceFragment : Fragment() {
     ): View {
         _binding = FragmentAnnounceBinding.inflate(inflater, container, false)
 
-        // RecyclerView 설정
         setupRecyclerView()
-
-        // Firestore 데이터 가져오기
         fetchAnnouncements()
-
-        // 뒤로 가기 콜백 설정
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                findNavController().popBackStack()
-            }
-        })
-
-        // 필터 텍스트뷰 클릭 이벤트 설정
         setupFilterListeners()
 
         return binding.root
@@ -57,7 +41,7 @@ class AnnounceFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null // 메모리 누수 방지
+        _binding = null
     }
 
     private fun setupRecyclerView() {
@@ -73,9 +57,9 @@ class AnnounceFragment : Fragment() {
             putString("announcement_title", announcement.announcement_title)
             putString("house_type", announcement.house_type)
             putString("house_detail_type", announcement.house_detail_type)
-            putString("announcement_date", formatDate(announcement.announcement_date))
-            putString("supply_household_count", formatNumber(announcement.supply_household_count))
-            putString("contact_number", formatPhoneNumber(announcement.contact_number))
+            putString("announcement_date", announcement.announcement_date)
+            putString("supply_household_count", announcement.supply_household_count.toString())
+            putString("contact_number", announcement.contact_number)
             putString("announcement_url", announcement.announcement_url)
         }
         findNavController().navigate(R.id.action_announceFragment_to_detailFragment, bundle)
@@ -86,21 +70,35 @@ class AnnounceFragment : Fragment() {
             binding.regionSeoul to "서울",
             binding.regionBusan to "부산",
             binding.regionDaegu to "대구",
-            binding.houseHappy to "행복주택",
-            binding.houseYouth to "청년매입주택",
-            binding.houseRedevelopment to "재개발임대주택",
-            binding.qualificationYouth to "청년",
-            binding.qualificationSingle to "신혼부부",
-            binding.qualificationTwoChildren to "다자녀"
+            binding.regionIncheon to "인천",
+            binding.regionGwangju to "광주",
+            binding.regionDaejeon to "대전",
+            binding.regionUlsan to "울산",
+            binding.regionSejong to "세종",
+            binding.regionGyeonggi to "경기",
+            binding.regionGangwon to "강원",
+            binding.regionChungbuk to "충북",
+            binding.regionChungnam to "충남",
+            binding.regionJeonbuk to "전북",
+            binding.regionJeonnam to "전남",
+            binding.regionGyeongbuk to "경북",
+            binding.regionGyeongnam to "경남",
+            binding.regionJeju to "제주",
+            binding.houseLand to "토지",
+            binding.houseSale to "분양주택",
+            binding.houseLease to "임대주택",
+            binding.houseWelfare to "주거복지",
+            binding.houseShop to "상가",
+            binding.houseNewlyWed to "신혼희망타운"
         )
 
         filters.forEach { (view, filter) ->
             view.setOnClickListener {
-                if (selectedFilters.contains(filter)) {
-                    selectedFilters.remove(filter)
+                if (selectedFilters.values.contains(filter)) {
+                    selectedFilters.entries.removeIf { it.value == filter }
                     view.setBackgroundResource(R.drawable.textview_selector)
                 } else {
-                    selectedFilters.add(filter)
+                    selectedFilters[view.id.toString()] = filter
                     view.setBackgroundResource(R.drawable.textview_selector_selected)
                 }
                 updateSelectedFiltersDisplay()
@@ -113,7 +111,8 @@ class AnnounceFragment : Fragment() {
     }
 
     private fun updateSelectedFiltersDisplay() {
-        binding.selectedFilters.text = "선택된 필터: ${selectedFilters.joinToString(" #") { it }}"
+        binding.selectedFilters.text =
+            "선택된 필터: ${selectedFilters.values.joinToString(" #")}"
     }
 
     private fun fetchAnnouncements() {
@@ -140,8 +139,10 @@ class AnnounceFragment : Fragment() {
     private fun fetchFilteredAnnouncements() {
         binding.progressBar.visibility = View.VISIBLE
 
-        var query: Query = db.collection("announcements").orderBy("announcement_date", Query.Direction.DESCENDING)
-        selectedFilters.forEach { filter ->
+        var query: Query = db.collection("announcements")
+            .orderBy("announcement_date", Query.Direction.DESCENDING)
+
+        selectedFilters.values.forEach { filter ->
             query = query.whereArrayContains("filters", filter)
         }
 
@@ -162,7 +163,8 @@ class AnnounceFragment : Fragment() {
     }
 
     private fun parseDocumentToAnnouncement(document: QueryDocumentSnapshot): Announcement {
-        val supplyHouseholdCount = document.get("supply_household_count")?.toString()?.toIntOrNull() ?: 0
+        val supplyHouseholdCount =
+            document.get("supply_household_count")?.toString()?.toIntOrNull() ?: 0
         return Announcement(
             announcement_title = document.getString("announcement_title") ?: "제목 없음",
             house_type = document.getString("house_type") ?: "유형 없음",
@@ -172,26 +174,5 @@ class AnnounceFragment : Fragment() {
             contact_number = document.getString("contact_number") ?: "연락처 없음",
             announcement_url = document.getString("announcement_url") ?: "URL 없음"
         )
-    }
-
-    // 날짜 포맷 함수
-    private fun formatDate(date: String?): String {
-        return try {
-            val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.KOREA)
-            val outputFormat = SimpleDateFormat("yyyy년 MM월 dd일", Locale.KOREA)
-            inputFormat.parse(date ?: "")?.let { outputFormat.format(it) } ?: "날짜 없음"
-        } catch (e: Exception) {
-            "날짜 없음"
-        }
-    }
-
-    // 숫자 포맷 함수
-    private fun formatNumber(number: Int?): String {
-        return number?.let { "${NumberFormat.getInstance(Locale.KOREA).format(it)} 세대" } ?: "정보 없음"
-    }
-
-    // 전화번호 포맷 함수
-    private fun formatPhoneNumber(phone: String?): String {
-        return phone?.replace("(\\d{3})(\\d{4})(\\d{4})".toRegex(), "$1-$2-$3") ?: "연락처 없음"
     }
 }
