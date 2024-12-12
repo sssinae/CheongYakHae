@@ -78,28 +78,13 @@ class MainActivity : AppCompatActivity() {
                 R.id.loginFragment,
                 R.id.informationFragment,
                 R.id.writeFragment,
-                R.id.updateFragment
+                R.id.detailFragment,
             ),
             binding.drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
 
-        navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id == R.id.detailFragment) {
-                // 항상 햄버거 아이콘 표시
-                toggle.isDrawerIndicatorEnabled = true
-                toggle.syncState()
-                binding.toolbar.setNavigationOnClickListener {
-                    binding.drawerLayout.openDrawer(GravityCompat.START)
-                }
-            } else {
-                toggle.isDrawerIndicatorEnabled = true
-                toggle.syncState()
-                binding.toolbar.setNavigationOnClickListener {
-                    binding.drawerLayout.openDrawer(GravityCompat.START)
-                }
-            }
-        }
+
     }
 
 
