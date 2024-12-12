@@ -7,8 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cheongyakhae.KAKAO_MAP_KEY
+import com.example.cheongyakhae.R
 import com.example.cheongyakhae.adpater.AnnouncementAdapter
 import com.example.cheongyakhae.databinding.FragmentMainBinding
 import com.example.cheongyakhae.model.Announcement
@@ -49,6 +51,32 @@ class MainFragment : Fragment() {
 
         // 최신 공고 가져오기
         fetchLatestAnnouncements()
+
+        // 상단 버튼 클릭 리스너 설정
+        setupButtonListeners()
+    }
+
+    private fun setupButtonListeners() {
+        binding.btnAnnounce.setOnClickListener {
+            navigateToFragment(R.id.announceFragment)
+        }
+
+        binding.btnInfo.setOnClickListener {
+            navigateToFragment(R.id.informationFragment)
+        }
+
+        binding.btnCommunity.setOnClickListener {
+            navigateToFragment(R.id.communityFragment)
+        }
+
+        binding.btnMypage.setOnClickListener {
+            navigateToFragment(R.id.mypageFragment)
+        }
+    }
+
+    private fun navigateToFragment(fragmentId: Int) {
+        val navController = requireActivity().findNavController(R.id.nav_host_fragment)
+        navController.navigate(fragmentId)
     }
 
     private fun initializeMapView() {
