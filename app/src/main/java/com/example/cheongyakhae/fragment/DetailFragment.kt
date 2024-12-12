@@ -21,19 +21,10 @@ class DetailFragment : Fragment() {
     ): View {
         _binding = FragmentDetailBinding.inflate(inflater, container, false)
 
-        // 뒤로 가기 버튼 동작 설정
-        handleBackPressed()
-
         // 데이터 바인딩
         bindAnnouncementData()
 
         return binding.root
-    }
-
-    private fun handleBackPressed() {
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-            findNavController().popBackStack()
-        }
     }
 
     private fun bindAnnouncementData() {

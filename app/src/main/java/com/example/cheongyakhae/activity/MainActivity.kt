@@ -1,21 +1,22 @@
 package com.example.cheongyakhae.activity
 
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.GravityCompat
-import com.example.cheongyakhae.databinding.ActivityMainBinding
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import com.google.firebase.FirebaseApp
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.cheongyakhae.R
+import com.example.cheongyakhae.databinding.ActivityMainBinding
+import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
@@ -24,6 +25,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var toggle: ActionBarDrawerToggle
     private lateinit var auth: FirebaseAuth
     private lateinit var navController: NavController
+    private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var userTextView: TextView
     private lateinit var loginTextView: TextView
     private lateinit var signupTextView: TextView
@@ -48,7 +50,6 @@ class MainActivity : AppCompatActivity() {
 
         // UI 업데이트 (사용자 정보)
         updateNavigationHeader()
-
     }
 
     private fun setupNavigation() {
@@ -60,7 +61,8 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
 
-        val appBarConfiguration = AppBarConfiguration(
+        // AppBarConfiguration 설정 (뒤로가기 아이콘 대신 햄버거 아이콘만 표시)
+        appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.mainFragment,
                 R.id.announceFragment,
@@ -70,11 +72,10 @@ class MainActivity : AppCompatActivity() {
                 R.id.loginFragment,
                 R.id.informationFragment,
                 R.id.writeFragment,
-//                R.id.updateFragment
+                R.id.detailFragment
             ),
             binding.drawerLayout
         )
-
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         // 햄버거 버튼 설정
@@ -176,6 +177,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        return navController.navigateUp() || super.onSupportNavigateUp()
+        // 뒤로가기 아이콘 대신 항상 햄버거 아이콘을 사용
+        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 }
