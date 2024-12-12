@@ -4,20 +4,19 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
-import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import com.example.cheongyakhae.databinding.ActivityMainBinding
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.NavController
-import com.google.firebase.FirebaseApp
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.cheongyakhae.R
+import com.example.cheongyakhae.databinding.ActivityMainBinding
+import com.google.firebase.FirebaseApp
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -32,16 +31,13 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // 초기화 순서 변경: toggle 초기화 먼저 수행
+        // 초기화
         initializeToolbar()
-        initializeDrawerToggle() // toggle 먼저 초기화
+        initializeDrawerToggle()
         configureNavigationController()
         setNavigationMenuClickListener()
         setToolbarLogoNavigation()
         setHeaderNavigationListeners()
-
-        // 뒤로가기 버튼 동작 처리
-        handleBackPressed()
     }
 
     private fun initializeToolbar() {
@@ -88,15 +84,24 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
 
-        // DetailFragment에서는 드로어를 잠그고, 다른 화면에서는 잠금 해제
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id == R.id.detailFragment) {
-                binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+                // 항상 햄버거 아이콘 표시
+                toggle.isDrawerIndicatorEnabled = true
+                toggle.syncState()
+                binding.toolbar.setNavigationOnClickListener {
+                    binding.drawerLayout.openDrawer(GravityCompat.START)
+                }
             } else {
-                binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+                toggle.isDrawerIndicatorEnabled = true
+                toggle.syncState()
+                binding.toolbar.setNavigationOnClickListener {
+                    binding.drawerLayout.openDrawer(GravityCompat.START)
+                }
             }
         }
     }
+
 
     private fun setNavigationMenuClickListener() {
         binding.navigationView.setNavigationItemSelectedListener { menuItem ->
@@ -146,21 +151,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun handleBackPressed() {
-        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                if (navController.currentDestination?.id == R.id.detailFragment) {
-                    navController.popBackStack()
-                } else if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
-                    binding.drawerLayout.closeDrawer(GravityCompat.START)
-                } else {
-                    isEnabled = false // 기본 뒤로가기 동작 실행
-                    onBackPressedDispatcher.onBackPressed()
-                }
-            }
-        })
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (toggle.onOptionsItemSelected(item)) return true
         return super.onOptionsItemSelected(item)
@@ -174,6 +164,4 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
-
-
 }
